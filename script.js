@@ -74,7 +74,7 @@ function appendPageLinks(studentList) {
 
 
     for (i=0; i<totalPages; i++){
-      li[i]  += "<a href='#'>" +i+ "</a>";
+      li[i]  += "<a href='#' class='active'>" +i+ "</a>";
       console.log(li);
       ul.appendChild(li);
 
