@@ -37,7 +37,7 @@ function showPage (pageNumber, studentList){
   // Then loop through all students in our student list argument
   for (i=0; i<studentList.length; i++){
        // if student should be on this page number
-       if( i>(pageNumber*perPage)-perPage && i< pageNumber*perPage){
+       if( i>=(pageNumber*perPage)-perPage && i< pageNumber*perPage){
         studentList[i].style.display='block';
        }
        else {
