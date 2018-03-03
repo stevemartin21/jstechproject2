@@ -14,26 +14,16 @@ const perPage = 10;
 console.log(perPage);
 
 //Hide All of the students with function
-
  function hide(){
-  
   for (i=0; i<students.length; i++){
   students[i].style.display='none';
  // students[i].slice(0,10).style.display='block';
   }
-};
-
-//Call Hide Function to Hide All Elements in Student List
-
-  
+}; 
 // ShowPage taking two parameters pageNumber , Student List , depending on page number selected a different set of students would be shown to correspond to the page
-
 function showPage (pageNumber, studentList){
-
   //HIde All Students
-
   hide();
-
   // Then loop through all students in our student list argument
   for (i=0; i<studentList.length; i++){
        // if student should be on this page number
@@ -44,83 +34,79 @@ function showPage (pageNumber, studentList){
         studentList[i].style.display='none';
        }
   }
-
 }
-
+//Call Show Page Function with 1 as default page number and students as parameter
 showPage(1,students)
 
-
+//Second function with student list as paramenter to show students that correspond once a button is clicked
 function appendPageLinks(studentList) {
     // determine how many pages for this student list 
-    const totalPages = Math.ceil(studentList.length/10);
+    const totalPages = Math.ceil(studentList.length/perPage);
     console.log(totalPages)
    
     // create a page link section
-
-    let div = document.createElement('div')
-    div.classList.add('pagination')
-    console.log(div);
-    let ul = document.createElement('ul');
-    console.log(ul);
-    div.appendChild(ul);
-    console.log(div);
-    let li = document.createElement('li');
+    //I have created a couple of elements including a div, ul to match the required list
+    let navSection = document.createElement('div')
+    navSection.classList.add('pagination')
+    console.log(navSection);
+    let navList = document.createElement('ul');
+    console.log(navList);
+    console.log(navSection);
 
     // “for” every page
         // add a page link to the page link section
 
-/////////////////////// This is where I am getting stuck, I am not sure why it is not adding the looped li's into the ul
-
-
-
-    for (i=0; i<totalPages; i++){
-      li[i]  += "<a href='#' class='active'>" +i+ "</a>";
-      console.log(li);
-      ul.appendChild(li);
-
-      //not sure why I can't add to ul after loop, not quite understanding this section 
-
+    for (i=1; i<totalPages+1; i++){
+      navList.innerHTML  += "<li ><a href='#' class='links'>" +i+ "</a></li>";
     }
-
-    /////////////////  Also it is not amending the created elements to the dom
-
     // remove the old page link section from the site
     // append our new page link section to the site
-    
-    console.log(li);
-    let main = document.querySelectorAll('.page');
+    navSection.appendChild(navList);
+    console.log(navList);
+    //I have added the new created elements to the dom and attached to each other in the correct order
+    let main = $('.page');
     console.log(main)
-    main.appendChild(div);
+       main.append(navSection);
     console.log(main);
 
     // define what happens when you click a link
         // Use the showPage function to display the page for the link clicked
         // mark that link as “active”
 
-    let a = document.getElementsByTagName('a');
+    let navLinks = document.getElementsByClassName('links');
+    console.log(navList);
+    console.log(navLinks)
 
-    for (i=0; i<a.length; a++){
+    //Show the the first link with class active 
+    navLinks[0].classList.add('active');
 
-    a.addEventListener('click', function(){
-      showPage(this.innerHTML, students);
-      $(this).addClass('active');
-      for (i=0; i<a.length; i++){
-        if(!this){
-          a[i].addClass('');
+    for (i=0; i<totalPages; i++){
+      console.log(totalPages)
+
+    navLinks[i].addEventListener('click', function(e){
+      console.log(e.target.innerHTML);
+      e.preventDefault();
+      showPage(e.target.innerHTML, studentList);
+       $(e.target).addClass('active');
+       //$(!e.target).className='';
+       
+     
+    for (i=0; i<totalPages; i++){
+      console.log('success')
+      console.log(navList);  
+      if(e.target.innerHTML !== navLinks[i].innerHTML  ){
+            console.log(e.target.innerHTML);
+            console.log(navLinks[i])
+            navLinks[i].className="";
+           // e.target.className='active';
         }
-      }
-
+       } 
     });
-  }
+  };
+};
 
 
-
-
-    
-    
-    
-}
-
+appendPageLinks(students);
 /*
 
   <div class="pagination">
@@ -145,4 +131,3 @@ function appendPageLinks(studentList) {
 
   */
 
-appendPageLinks(students)
